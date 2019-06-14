@@ -19,7 +19,6 @@ The easiest way to install the dependencies
 is via [OPAM](https://opam.ocaml.org/doc/Install.html):
 
 ```shell
-opam repo add coq-released https://coq.inria.fr/opam/released
 opam repo add coq-extra-dev https://coq.inria.fr/opam/extra-dev
 opam install ott coq-ott
 ```
