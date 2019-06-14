@@ -45,6 +45,6 @@ $(caml_combinations:=_syntax.ott):
 $(caml_combinations:=_typing.ott):
 $(caml_combinations:=_reduction.ott):
 ## Ott output
-$(caml_combinations:=.v): $(OTT)
+$(caml_combinations:=.v):
 
 #### The End ####
