@@ -1,0 +1,29 @@
+opam-version: "2.0"
+version: "dev"
+maintainer: "palmskog@gmail.com"
+
+homepage: "https://github.com/palmskog/ocaml-light-extraction"
+dev-repo: "git+https://github.com/palmskog/ocaml-light-extraction.git"
+bug-reports: "https://github.com/palmskog/ocaml-light-extraction/issues"
+license: "BSD-3-Clause"
+synopsis: "Coq formalization of OCaml Light"
+
+build: [make "-j%{jobs}%"]
+install: [make "install"]
+depends: [
+  "ocaml"
+  "coq" {>= "8.8" & < "8.9~"}  
+  "ott" {>= "0.28"}
+  "coq-ott"
+]
+
+tags: [
+  "keyword:ocaml light"
+  "keyword:extraction"  
+  "logpath:OCamlLight"
+]
+authors: [
+  "Scott Owens"
+  "Gilles Peskine"
+  "Peter Sewell"
+]
