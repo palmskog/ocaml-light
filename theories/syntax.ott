@@ -156,7 +156,7 @@ Require Import BinInt.
 Require String.
 Require Import Zdiv.
 Require Import Ott.ott_list.
-Require Import caml_lib_misc.
+Require Import OCamlLight.caml_lib_misc.
 Require Import Sorting.Permutation.
 }}
 

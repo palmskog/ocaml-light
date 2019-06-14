@@ -1,0 +1,50 @@
+#### Programs and their arguments ####
+OTT = ott
+OTT_COMMON_FLAGS = -pp_grammar -coq_expand_list_types false
+## Run `make OTT_VERBOSITY_FLAGS= target' to cause ott to spew out a
+## lot of debugging output.
+OTT_VERBOSITY_FLAGS = -show_defns false
+OTT_FLAGS = -no_rbcatn true $(OTT_COMMON_FLAGS) $(OTT_VERBOSITY_FLAGS)
+
+#### Preprocessing ####
+caml_combinations = theories/caml_plain theories/caml_module theories/caml_module_typedef theories/caml_typedef
+
+## Extract the desired language fragment
+theories/caml_plain_%.ott: theories/%.ott
+	cat $< >$@.tmp
+	mv -f $@.tmp $@
+theories/caml_module_%.ott: theories/%.ott
+	sed -e 's/\(\(%[^%]\)*\)%m/\1/' $< >$@.tmp
+	mv -f $@.tmp $@
+theories/caml_typedef_%.ott: theories/%.ott
+	sed -e 's/\(\(%[^%]\)*\)%d/\1/' $< >$@.tmp
+	mv -f $@.tmp $@
+theories/caml_module_typedef_%.ott: theories/%.ott
+	sed -e 's/\(\(%[^%]\)*\)%d/\1/' -e 's/\(\(%[^%]\)*\)%m/\1/' $< >$@.tmp
+	mv -f $@.tmp $@
+
+## Multiple extraction targets
+theories/caml_%.ott: theories/caml_%_syntax.ott theories/caml_%_typing.ott theories/caml_%_reduction.ott ;
+
+#### Ott ####
+## Separate ott runs, one per target
+theories/caml%.v: theories/caml%_syntax.ott theories/caml%_typing.ott theories/caml%_reduction.ott
+	$(OTT) $(OTT_FLAGS) -coq_expand_list_types false -o $@ $(@:.v=)_syntax.ott $(@:.v=)_typing.ott $(@:.v=)_reduction.ott
+
+## Generate all combinations
+caml_combinations.v: $(caml_combinations:=.v) ;
+
+#### Cleanup ####
+clean::
+	rm -f $(caml_combinations:=_syntax.ott) $(caml_combinations:=_typing.ott) $(caml_combinations:=_reduction.ott)
+	rm -f $(caml_combinations:=.v)
+
+#### Dependencies ####
+## Ott preprocessed sources
+$(caml_combinations:=_syntax.ott):
+$(caml_combinations:=_typing.ott):
+$(caml_combinations:=_reduction.ott):
+## Ott output
+$(caml_combinations:=.v): $(OTT)
+
+#### The End ####

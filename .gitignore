@@ -1,0 +1,14 @@
+*.vo
+*.glob
+*.v.d
+*.aux
+*.vio
+*~
+Makefile.coq
+Makefile.coq.bak
+Makefile.coq.conf
+.coqdeps.d
+theories/caml_typedef.v
+theories/caml_typedef_reduction.ott
+theories/caml_typedef_syntax.ott
+theories/caml_typedef_typing.ott
